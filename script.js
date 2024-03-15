@@ -35,7 +35,7 @@ function operate(operand1, operator, operand2) {
             result = divide(operand1, operand2);
             break;
     }
-    if (result.toString().length > 12){
+    if (result.toString().length > 12) {
         decimalPlaces = MAXDIGITS - parseInt(result).toString().length;
         result = result.toFixed(decimalPlaces);
     }
@@ -46,7 +46,7 @@ function isOperator(value) {
     return /[\-+*/]/.test(value);
 }
 
-function isNumber(value){
+function isNumber(value) {
     return /[0-9]/.test(value);
 }
 
@@ -61,58 +61,58 @@ buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
         displayValue = display.textContent;
         clickedButton = event.target;
-        if (isNumber(clickedButton.value)){
-            if (displayValue.length < 12 ){ // Check if clicked number must be appended or if it must replace the display value
-                if (previousButton){
+        if (isNumber(clickedButton.value)) {
+            if (displayValue.length < 12) { // Check if clicked number must be appended or if it must replace the display value
+                if (previousButton) {
                     display.textContent = (displayValue == "0" || isOperator(previousButton.value)) ? clickedButton.value : displayValue + clickedButton.value;
                 }
-                else{
+                else {
                     display.textContent = (displayValue == "0") ? clickedButton.value : displayValue + clickedButton.value;
                 }
             }
-            if (previousButton && isOperator(previousButton.value)){ // Add displayed number to the array when clicking on number(s) afte clicking on operator
+            if (previousButton && isOperator(previousButton.value)) { // Add displayed number to the array when clicking on number(s) afte clicking on operator
                 display.textContent = clickedButton.value;
                 operationArray.push(previousButton.value);
             }
         }
-        else if (isOperator(clickedButton.value)){
-            if (previousButton && ( isNumber(previousButton.value) || previousButton.value === "=") ){
+        else if (isOperator(clickedButton.value)) {
+            if (previousButton && (isNumber(previousButton.value) || previousButton.value === "=")) {
                 operationArray.push(displayValue);
             }
-            if (operationArray.length === 3){
+            if (operationArray.length === 3) {
                 result = operate(...operationArray);
                 operationArray = [result,];
                 display.textContent = result;
             }
         }
-        else if (clickedButton.value == "="){
-            if (!previousButton){
+        else if (clickedButton.value == "=") {
+            if (!previousButton) {
                 return;
             }
-            if (isNumber(previousButton.value)){
+            if (isNumber(previousButton.value)) {
                 operationArray.push(displayValue);
             }
-            else if (isOperator(previousButton.value)){
+            else if (isOperator(previousButton.value)) {
                 operationArray.push(previousButton.value);
             }
-            if (operationArray.length === 3){
+            if (operationArray.length === 3) {
                 result = operate(...operationArray);
             }
-            else if (operationArray.length === 2){
+            else if (operationArray.length === 2) {
                 result = operate(operationArray[0], operationArray[1], operationArray[0]);
             }
-            if (result){
+            if (result) {
                 display.textContent = result;
                 operationArray = [];
             }
         }
-        else if (clickedButton.value == "clear"){
+        else if (clickedButton.value == "clear") {
             display.textContent = "0";
             operationArray = [];
             previousButton = null;
         }
-        else if (clickedButton.value == "sign"){
-            if (displayValue != "0"){
+        else if (clickedButton.value == "sign") {
+            if (displayValue != "0") {
                 displayValue = parseFloat(displayValue) * -1;
                 display.textContent = displayValue;
             }
