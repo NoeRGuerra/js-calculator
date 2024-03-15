@@ -106,6 +106,11 @@ buttons.forEach((button) => {
                 operationArray = [];
             }
         }
+        else if (clickedButton.value == "clear"){
+            display.textContent = "0";
+            operationArray = [];
+            previousButton = null;
+        }
         previousButton = clickedButton;
     })
 })
