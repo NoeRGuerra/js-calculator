@@ -111,6 +111,12 @@ buttons.forEach((button) => {
             operationArray = [];
             previousButton = null;
         }
+        else if (clickedButton.value == "sign"){
+            if (displayValue != "0"){
+                displayValue = parseFloat(displayValue) * -1;
+                display.textContent = displayValue;
+            }
+        }
         previousButton = clickedButton;
     })
 })
