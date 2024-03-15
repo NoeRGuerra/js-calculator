@@ -32,6 +32,10 @@ function operate(operand1, operator, operand2) {
             result = multiply(operand1, operand2);
             break;
         case "/":
+            if (operand2 === 0){
+                result = "Error";
+                break;
+            }
             result = divide(operand1, operand2);
             break;
     }
@@ -59,7 +63,7 @@ let displayValue;
 let result;
 buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
-        displayValue = display.textContent;
+        displayValue = display.textContent == "Error" ? "0" : display.textContent;
         clickedButton = event.target;
         if (isNumber(clickedButton.value)) {
             if (displayValue.length < 12) { // Check if clicked number must be appended or if it must replace the display value
@@ -116,6 +120,10 @@ buttons.forEach((button) => {
                 displayValue = parseFloat(displayValue) * -1;
                 display.textContent = displayValue;
             }
+        }
+        else if (clickedButton.value == "percent") {
+            displayValue = displayValue/100;
+            display.textContent = displayValue;
         }
         previousButton = clickedButton;
     })
